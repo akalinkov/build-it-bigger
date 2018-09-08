@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 mApi = builder.build();
             }
             try {
-                return mApi.sayHi("no_name").execute().getData();
+                return mApi.getJoke().execute().getData();
             } catch (IOException ex) {
                 ex.printStackTrace();
                 return null;
