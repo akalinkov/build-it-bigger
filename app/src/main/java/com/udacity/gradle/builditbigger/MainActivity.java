@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
-import com.example.android.jokesprovider.JokesProvider;
 import com.example.android.jokesvisualizer.JokeDisplayActivity;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -76,16 +76,24 @@ public class MainActivity extends AppCompatActivity {
             try {
                 return mApi.sayHi("no_name").execute().getData();
             } catch (IOException ex) {
-                return ex.getMessage();
+                ex.printStackTrace();
+                return null;
             }
         }
 
         @Override
         protected void onPostExecute(String s) {
+            if (null == s) {
+                showConnectionFailure();
+                return;
+            }
             Intent displayJoke = new Intent(MainActivity.this, JokeDisplayActivity.class);
-            displayJoke.putExtra(JokeDisplayActivity.JOKE_EXTRA_KEY, JokesProvider.getJoke());
+            displayJoke.putExtra(JokeDisplayActivity.JOKE_EXTRA_KEY, s);
             startActivity(displayJoke);
         }
-    }
 
+        private void showConnectionFailure() {
+            Toast.makeText(MainActivity.this, "Connection error", Toast.LENGTH_LONG ).show();
+        }
+    }
 }
