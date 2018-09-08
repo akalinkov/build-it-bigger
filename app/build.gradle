@@ -60,7 +60,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     endpointsServer project(path: ':backend', configuration: 'endpoints')
-    implementation project(':jokesProvider')
     implementation project(':jokesVisualizer')
     implementation project(':backend')
     implementation 'com.android.support:appcompat-v7:27.1.1'
